@@ -1,5 +1,4 @@
-
 export interface IModel {
-  id: number;
-  created: Date;
+    id: number;
+    created: Date;
 }

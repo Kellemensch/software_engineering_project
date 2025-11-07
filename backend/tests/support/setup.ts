@@ -1,11 +1,9 @@
+import { beforeAll } from "vitest";
+import supertest, { Test } from "supertest";
+import TestAgent from "supertest/lib/agent";
 
-import { beforeAll } from 'vitest';
-import supertest, { Test } from 'supertest';
-import TestAgent from 'supertest/lib/agent';
-
-import app from '@src/server';
-import MockOrm from '@src/repos/MockOrm';
-
+import app from "@src/server";
+import MockOrm from "@src/repos/MockOrm";
 
 /******************************************************************************
                                     Run
@@ -14,10 +12,9 @@ import MockOrm from '@src/repos/MockOrm';
 let agent: TestAgent<Test>;
 
 beforeAll(async () => {
-  agent = supertest.agent(app);
-  await MockOrm.cleanDb();
+    agent = supertest.agent(app);
+    await MockOrm.cleanDb();
 });
-
 
 /******************************************************************************
                                     Export
