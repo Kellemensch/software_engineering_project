@@ -1,18 +1,21 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "./AuthContext";
 
 const LoginPage = () => {
     // some code that see if we are already logged in
+    let { loggedIn, login } = useContext(AuthContext);
+
     let navigate = useNavigate();
     useEffect(() => {
-        navigate("/app");
-    });
+        if (loggedIn) navigate("/dashboard");
+    }, [loggedIn]);
 
     return (
         <div>
-            <button>Login as Salesperson</button>
-            <button>Login as Accountant</button>
-            <button>Login as Manager</button>
+            <button onClick={login}>Login as Salesperson</button>
+            <button onClick={login}>Login as Accountant</button>
+            <button onClick={login}>Login as Manager</button>
         </div>
     );
 };

@@ -1,14 +1,16 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router";
 import LoginPage from "./LoginPage";
 import Dashboard from "./Dashboard";
+import { AuthContextProvider } from "./AuthContext";
 
 function App() {
     return (
-        <Routes>
-            <Route index element={<LoginPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+        <AuthContextProvider>
+            <Routes>
+                <Route index element={<LoginPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+        </AuthContextProvider>
     );
 }
 
