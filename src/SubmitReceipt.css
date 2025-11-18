@@ -1,0 +1,73 @@
+.background {
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-receipt-card {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 20px;
+  width: 90vw;
+  max-width: 600px;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #4df6c8;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.image-box,
+.preview-image-box {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.submit-receipt-card .input {
+    font-size: larger;
+    color: black;
+    background-color: white;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.submit-receipt-card button {
+  display: block;
+  background-color: #42efc4;
+  border: 2px solid white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-receipt-card button:hover {
+    color: #42efc4;
+    background-color: white;
+    border: 2px solid #42efc4;
+}
