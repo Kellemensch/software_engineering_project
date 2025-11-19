@@ -13,7 +13,7 @@ export default function AccountantNavbar() {
           </li>
 
           <li>
-            <a className="hide" href="/reviewReceipt">Review</a>
+            <a className="hide" href="/review">Review</a>
           </li>
           <li>
             <a className="hide" href="/history">History</a>
@@ -52,7 +52,7 @@ export default function AccountantNavbar() {
             </button>
           </li>
           <li>
-            <a className="link" href="/reviewReceipt" onClick={() => setMenuOpen(false)}>Review</a>
+            <a className="link" href="/review" onClick={() => setMenuOpen(false)}>Review</a>
           </li>
           <li>
             <a className="link" href="/history" onClick={() => setMenuOpen(false)}>History</a>

@@ -32,18 +32,11 @@ export default function Profile() {
           <p><span className="label">Name:</span> {user.name}</p>
           <p><span className="label">Lastname:</span> {user.lastname}</p>
           <p><span className="label">Date of Birth:</span> {user.dob}</p>
-          <br />
-          <br />
 
           <p><span className="label">Mail:</span> {user.email}</p>
           <p><span className="label">Phone number:</span> {user.phone}</p>
-          <br />
-          <br />
 
           <p className="change-password">Change Password</p>
-          <br />
-          <br />
-          <br />
 
           <p className="group-id">Group ID: <span>{user.groupId}</span></p>
         </div>

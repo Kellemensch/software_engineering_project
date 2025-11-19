@@ -1,4 +1,4 @@
-import "./ReviewReceipt.css";
+import "./Review.css";
 import { Info, CheckCircle } from "lucide-react";
 
 export default function ReviewReceipt() {
