@@ -1,0 +1,13 @@
+.waiting-approval-card {
+  background: white;
+  border: 2px solid #36e6b5;
+  border-radius: 20px;
+  width: 85%;
+  max-width: 400px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.waiting-approval-card {
+  padding: 20px;
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function SalespersonNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

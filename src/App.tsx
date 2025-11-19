@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
-import Dashboard from "./Dashboard";
+import Navbar from "./NavigationBar/Navbar";
+import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile";
 import SubmitReceipt from "./SubmitReceipt";
+import ReviewReceipt from "./ReviewReceipt";
 import History from "./History";
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
@@ -28,6 +29,7 @@ function AppContent() {
           <Route path="/history" element={<History />} />
 
           <Route path="/submitReceipt" element={<SubmitReceipt />} />
+          <Route path="/reviewReceipt" element={<ReviewReceipt />} />
         </Routes>
       </main>
     </>

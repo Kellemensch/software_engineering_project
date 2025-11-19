@@ -1,26 +1,25 @@
-import "./Dashboard.css";
 import { CheckCircle, XCircle } from "lucide-react";
 
-export default function Dashboard() {
-  const stats = {
-    submitted: 108,
-    accepted: 106,
-    rejected: 2,
-  };
+export default function SalesDashboard() {
+    const stats = {
+        submitted: 108,
+        accepted: 106,
+        rejected: 2,
+    };
 
-  const notifications = [
-    { date: "1.1.2025", store: "Lidl", status: "accepted" },
-    { date: "31.12.2024", store: "Lidl", status: "rejected" },
-    { date: "12.11.2024", store: "Lidl", status: "accepted" },
-    { date: "1.1.2024", store: "Lidl", status: "accepted" },
-    { date: "1.1.2025", store: "Lidl", status: "accepted" },
-    { date: "31.12.2024", store: "Lidl", status: "rejected" },
-    { date: "12.11.2024", store: "Lidl", status: "accepted" },
-    { date: "1.1.2024", store: "Lidl", status: "accepted" },
-  ];
+    const notifications = [
+        { date: "1.1.2025", store: "Lidl", status: "accepted" },
+        { date: "31.12.2024", store: "Lidl", status: "rejected" },
+        { date: "12.11.2024", store: "Lidl", status: "accepted" },
+        { date: "1.1.2024", store: "Lidl", status: "accepted" },
+        { date: "1.1.2025", store: "Lidl", status: "accepted" },
+        { date: "31.12.2024", store: "Lidl", status: "rejected" },
+        { date: "12.11.2024", store: "Lidl", status: "accepted" },
+        { date: "1.1.2024", store: "Lidl", status: "accepted" },
+    ];
 
-  return (
-    <div className="dashboard-container">
+    return(
+        <div className="dashboard-container">
       <div className="dashboard-card">
         <h2>Dashboard</h2>
         <div className="dashboard-stats">
@@ -51,5 +50,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+    );
 }
