@@ -3,6 +3,7 @@ import Navbar from "./NavigationBar/Navbar";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile";
 import SubmitReceipt from "./SubmitReceipt";
+import ReceiptInformation from "./ReceiptInformation/ReceiptInformation";
 import Review from "./Review";
 import History from "./History/History";
 import Login from "./Authentication/Login";
@@ -30,6 +31,8 @@ function AppContent() {
 
           <Route path="/submitReceipt" element={<SubmitReceipt />} />
           <Route path="/review" element={<Review />} />
+
+          <Route path="/receiptInformation" element={<ReceiptInformation />} />
         </Routes>
       </main>
     </>

@@ -1,4 +1,5 @@
 import { Info, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function AccountantDashboard() {
     const stats = {
@@ -47,14 +48,16 @@ export default function AccountantDashboard() {
           <h2>Notifications</h2>
           <div className="notifications-list">
             {notifications.map((n, i) => (
-              <div key={i} className={`notification-item ${n.status === "new" ? "new" : ""} ${ n.status === "rejected" ? "rejected" : "" }`}>
-                <span>{n.account}<br />{n.date} – {n.store} </span>
-                {n.status === "new" ? (
-                  <Info size={24} className="icon info-icon" />
-                ) : (
-                  <CheckCircle size={24} className="icon accepted-icon" />
-                )}
-              </div>
+              <Link key={i} to="/receiptInformation" className="notification-link">
+                <div className={`notification-item ${n.status === "new" ? "new" : ""} ${ n.status === "rejected" ? "rejected" : "" }`}>
+                  <span>{n.account}<br />{n.date} – {n.store}</span>
+                  {n.status === "new" ? (
+                    <Info size={24} className="icon info-icon" />
+                  ) : (
+                    <CheckCircle size={24} className="icon accepted-icon" />
+                  )}
+                </div>
+              </Link>
             ))}
           </div>
         </div>

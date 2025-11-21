@@ -4,7 +4,7 @@ import ManagerNavbar from "./ManagerNavbar";
 
 export default function Navbar() {
   /* 0=sales, 1=accountant, 2=manager*/
-  let user = 1;
+  let user = 0;
 
   switch (user) {
     case 0:

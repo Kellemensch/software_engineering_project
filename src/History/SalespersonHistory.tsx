@@ -1,4 +1,6 @@
 import { CheckCircle, XCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export default function SalespersonHistory() {
         
     const notifications = [
@@ -16,10 +18,16 @@ export default function SalespersonHistory() {
           <h2>Submit History</h2>
           <div className="notifications-list">
             {notifications.map((n, i) => (
-                <div key={i} className={`notification-item ${ n.status === "rejected" ? "rejected" : "" }`}>
-                    <span> {n.date} – {n.store} </span>
-                    {n.status === "accepted" ? ( <CheckCircle size={24} className="icon accepted-icon" /> ) : ( <XCircle size={24} className="icon rejected-icon" /> )}
+              <Link key={i} to="/receiptInformation" className="notification-link">
+                <div className={`notification-item ${ n.status === "rejected" ? "rejected" : "" }`}>
+                    <span>{n.date} – {n.store}</span>
+                    {n.status === "accepted" ? (
+                      <CheckCircle size={24} className="icon accepted-icon" />
+                    ) : (
+                      <XCircle size={24} className="icon rejected-icon" />
+                    )}
                 </div>
+              </Link>
             ))}
           </div>
         </div>

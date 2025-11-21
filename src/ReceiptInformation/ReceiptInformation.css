@@ -1,0 +1,79 @@
+.information-container {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7faff;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    color: black;
+    gap: 20px;
+}
+
+.information-card {
+    background: white;
+    border: 2px solid #36e6b5;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 400px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+.information-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.information-image {
+    width: 90%;
+    height: auto;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.button-container {
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.delete-button,
+.valid-button,
+.not-valid-button {
+    display: block;
+    background-color: red;
+    border: 2px solid white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    padding: 15px;
+}
+
+.valid-button {
+    background-color: #36e6b5;
+}
+
+@media (min-width: 768px) {
+  .information-container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding-top: 120px;
+  }
+}

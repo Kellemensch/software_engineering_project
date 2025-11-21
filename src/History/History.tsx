@@ -4,7 +4,7 @@ import ManagerHistory from "./ManagerHistory";
 
 export default function History() {
     /* 0=sales, 1=accountant, 2=manager*/
-    let user = 1;
+    let user = 0;
 
     switch (user) {
         case 0:

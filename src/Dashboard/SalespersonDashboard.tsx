@@ -1,4 +1,5 @@
 import { CheckCircle, XCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function SalesDashboard() {
     const stats = {
@@ -19,7 +20,7 @@ export default function SalesDashboard() {
     ];
 
     return(
-        <div className="dashboard-container">
+    <div className="dashboard-container">
       <div className="dashboard-card">
         <h2>Dashboard</h2>
         <div className="dashboard-stats">
@@ -42,10 +43,16 @@ export default function SalesDashboard() {
         <h2>Notifications</h2>
         <div className="notifications-list">
           {notifications.map((n, i) => (
-            <div key={i} className={`notification-item ${ n.status === "rejected" ? "rejected" : "" }`}>
-              <span> {n.date} – {n.store} </span>
-              {n.status === "accepted" ? ( <CheckCircle size={24} className="icon accepted-icon" /> ) : ( <XCircle size={24} className="icon rejected-icon" /> )}
-            </div>
+            <Link key={i} to="/receiptInformation" className="notification-link">
+              <div className={`notification-item ${n.status === "rejected" ? "rejected" : ""}`}>
+                <span>{n.date} – {n.store}</span>
+                {n.status === "accepted" ? (
+                  <CheckCircle size={24} className="icon accepted-icon" />
+                ) : (
+                  <XCircle size={24} className="icon rejected-icon" />
+                )}
+              </div>
+            </Link>
           ))}
         </div>
       </div>
