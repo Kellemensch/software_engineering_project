@@ -11,7 +11,7 @@ export default function Dashboard() {
      1 = Accountant
      2 = Manager
   */
-  let user = 0;
+  let user = 2;
 
   const renderScreen = () => {
     switch (user) {

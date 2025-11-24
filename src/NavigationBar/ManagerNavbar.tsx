@@ -13,7 +13,7 @@ export default function ManagerNavbar() {
           </li>
 
           <li>
-            <a className="hide" href="/submitReceipt">Submit a Receipt</a>
+            <a className="hide" href="/review">Review</a>
           </li>
           <li>
             <a className="hide" href="/history">History</a>
@@ -52,7 +52,7 @@ export default function ManagerNavbar() {
             </button>
           </li>
           <li>
-            <a className="link" href="/submitReceipt" onClick={() => setMenuOpen(false)}>Submit a Receipt</a>
+            <a className="link" href="/review" onClick={() => setMenuOpen(false)}>Review</a>
           </li>
           <li>
             <a className="link" href="/history" onClick={() => setMenuOpen(false)}>History</a>
