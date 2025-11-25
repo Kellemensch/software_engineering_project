@@ -1,5 +1,3 @@
 export default function ManagerHistory() {
-    return(
-        <b></b>
-    );
+    return <b>Manager History</b>;
 }

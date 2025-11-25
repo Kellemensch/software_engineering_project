@@ -2,9 +2,8 @@ import SalespersonHistory from "./SalespersonHistory";
 import AccountantHistory from "./AccountantHistory";
 import ManagerHistory from "./ManagerHistory";
 
-export default function History() {
+export default function History({ user = 0 }) {
     /* 0=sales, 1=accountant, 2=manager*/
-    let user = 0;
 
     switch (user) {
         case 0:

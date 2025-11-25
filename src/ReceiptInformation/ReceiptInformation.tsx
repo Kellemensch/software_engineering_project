@@ -4,9 +4,8 @@ import ManagerReceiptInfo from "./ManagerReceiptInfo";
 
 import "./ReceiptInformation.css";
 
-export default function History() {
+export default function ReceiptInformation({ user = 0 }) {
     /* 0=sales, 1=accountant, 2=manager*/
-    let user = 0;
 
     switch (user) {
         case 0:

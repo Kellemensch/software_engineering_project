@@ -1,5 +1,3 @@
 export default function ManagerReceiptInfo() {
-    return(
-        <b></b>
-    );
+    return <b>Manager Receipt Information</b>;
 }

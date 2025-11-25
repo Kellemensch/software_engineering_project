@@ -1,27 +1,77 @@
 import { CheckCircle } from "lucide-react";
-export default function AccountantHistory() {    
+export default function AccountantHistory() {
     const notifications = [
-        { account: "Katy Perry", date: "12.11.2024", store: "Lidl", status: "accepted" },
-        { account: "Dwayne Johnson", date: "1.1.2024", store: "Lidl", status: "accepted" },
-        { account: "Dwayne Johnson", date: "1.1.2025", store: "Lidl", status: "accepted" },
-        { account: "Liam Neeson", date: "31.12.2024", store: "Lidl", status: "accepted" },
-        { account: "Dwayne Johnson", date: "12.11.2024", store: "Lidl", status: "accepted" },
-        { account: "Katy Perry", date: "1.1.2024", store: "Lidl", status: "accepted" },
+        {
+            account: "Katy Perry",
+            date: "12.11.2024",
+            store: "Lidl",
+            status: "rejected",
+        },
+        {
+            account: "Dwayne Johnson",
+            date: "1.1.2024",
+            store: "Lidl",
+            status: "accepted",
+        },
+        {
+            account: "Dwayne Johnson",
+            date: "1.1.2025",
+            store: "Lidl",
+            status: "accepted",
+        },
+        {
+            account: "Liam Neeson",
+            date: "31.12.2024",
+            store: "Lidl",
+            status: "accepted",
+        },
+        {
+            account: "Dwayne Johnson",
+            date: "12.11.2024",
+            store: "Lidl",
+            status: "accepted",
+        },
+        {
+            account: "Katy Perry",
+            date: "1.1.2024",
+            store: "Lidl",
+            status: "accepted",
+        },
+        {
+            account: "Katy Perry",
+            date: "1.1.2024",
+            store: "Lidl",
+            status: "new",
+        },
     ];
 
-    return(
-      <div className="dashboard-container">
-        <div className="notifications-card">
-          <h2>Review History</h2>
-          <div className="notifications-list">
-            {notifications.map((n, i) => (
-              <div key={i} className={`notification-item ${n.status === "new" ? "new" : ""} ${ n.status === "rejected" ? "rejected" : "" }`}>
-                <span>{n.account}<br />{n.date} – {n.store} </span>
-                <CheckCircle size={24} className="icon accepted-icon" />
-              </div>
-            ))}
-          </div>
+    return (
+        <div className="dashboard-container">
+            <div className="notifications-card">
+                <h2>Review History</h2>
+                <div className="notifications-list">
+                    {notifications.map((n, i) => (
+                        <div
+                            key={i}
+                            className={`notification-item ${
+                                n.status === "new" ? "new" : ""
+                            } ${n.status === "rejected" ? "rejected" : ""}`}
+                            data-testid="notification-div"
+                        >
+                            <span>
+                                {n.account}
+                                <br />
+                                {n.date} – {n.store}{" "}
+                            </span>
+                            <CheckCircle
+                                size={24}
+                                className="icon accepted-icon"
+                                data-testid="accepted-icon"
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-      </div>
-    )
+    );
 }
