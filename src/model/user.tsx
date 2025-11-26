@@ -3,7 +3,6 @@
 export interface User {
     firstname: string;
     lastname: string;
-    birth: Date;
     email: string;
     phone?: string;
     groupId: number;
@@ -15,7 +14,32 @@ export interface User {
 
 export type UserType = "salesperson" | "manager" | "accountant" | "admin";
 
-let users: User[] = [];
+let users: User[] = [
+    {
+        firstname: "Erika",
+        lastname: "Mustermann",
+        email: "salesperson@example.com",
+        groupId: 0,
+        type: "salesperson",
+        password: "changeme",
+    },
+    {
+        firstname: "John",
+        lastname: "Doe",
+        email: "accountant@example.com",
+        groupId: 0,
+        type: "accountant",
+        password: "password",
+    },
+    {
+        firstname: "Mr",
+        lastname: "Tout-le-monde",
+        email: "manager@example.com",
+        groupId: 0,
+        type: "manager",
+        password: "DonkeyKong",
+    },
+];
 
 /// Returns true if the given email and password match in the database
 export function login(email: string, password: string) {
@@ -27,7 +51,6 @@ export function login(email: string, password: string) {
 export function signup(userInfo: {
     firstname: string;
     lastname: string;
-    birth: Date;
     email: string;
     phone?: string;
     password: string;

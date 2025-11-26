@@ -11,10 +11,25 @@ export interface Receipt {
     amount: number;
     status: "new" | "verified" | "rejected" | "approved" | "reimbursed";
 
-    image: File;
+    image: string; // stored as an object URL
 }
 
-let receipts: Receipt[] = [];
+let receipts: Receipt[] = loadReceiptsFromLocalStorage();
+
+function loadReceiptsFromLocalStorage() {
+    const loaded = JSON.parse(localStorage.getItem("receipts") ?? "[]");
+    return loaded.map((data: any) => {
+        return {
+            ...data,
+            date: new Date(Date.parse(data.date)),
+        };
+    });
+}
+
+export function setReceipts(r: Receipt[]) {
+    receipts = r;
+    localStorage.setItem("receipts", JSON.stringify(receipts));
+}
 
 export function getReceipts() {
     return receipts;
@@ -24,13 +39,17 @@ export function getReceiptsForUser(email: string) {
     return receipts.filter((r) => r.salesperson.email == email);
 }
 
+export function getReceiptsForGroup(groupId: number) {
+    return receipts.filter((r) => r.salesperson.groupId == groupId);
+}
+
 export function createReceipt(data: {
     email: string;
     title: string;
     subject: string;
     date: Date;
     amount: number;
-    image: File;
+    image: string;
 }) {
     const id = uuidv4();
 
@@ -45,7 +64,7 @@ export function createReceipt(data: {
         id,
     };
 
-    receipts.push(receipt);
+    setReceipts([...receipts, receipt]);
     return id;
 }
 
@@ -54,8 +73,12 @@ export function approveReceipt(id: string, accountantEmail: string) {
     const approver = getUserData(accountantEmail);
     if (approver?.type !== "accountant") return false;
 
-    const receipt = receipts.find((r) => r.id === id)!;
-    receipt.status = "approved";
+    setReceipts(
+        receipts.map((r) => {
+            if (r.id === id) r.status = "approved";
+            return r;
+        }),
+    );
     return true;
 }
 
@@ -64,8 +87,12 @@ export function rejectReceipt(id: string, accountantEmail: string) {
     const approver = getUserData(accountantEmail);
     if (approver?.type !== "accountant") return false;
 
-    const receipt = receipts.find((r) => r.id === id)!;
-    receipt.status = "rejected";
+    setReceipts(
+        receipts.map((r) => {
+            if (r.id === id) r.status = "rejected";
+            return r;
+        }),
+    );
     return true;
 }
 
@@ -74,5 +101,5 @@ export function getReceipt(id: string) {
 }
 
 export function deleteReceipt(id: string) {
-    receipts = receipts.filter((r) => r.id !== id);
+    setReceipts(receipts.filter((r) => r.id !== id));
 }

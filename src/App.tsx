@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    useLocation,
+} from "react-router-dom";
 import Navbar from "./NavigationBar/Navbar";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile";
@@ -8,41 +13,49 @@ import Review from "./Review";
 import History from "./History/History";
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
+import { AuthProvider } from "./Authentication/AuthContext";
+import Logout from "./Authentication/Logout";
 
 function AppContent() {
-  const location = useLocation();
+    const location = useLocation();
 
-  const authenticationRoutes = ["/login", "/register"];
-  const hideNavbar = authenticationRoutes.includes(location.pathname);
+    const authenticationRoutes = ["/login", "/register"];
+    const hideNavbar = authenticationRoutes.includes(location.pathname);
 
-  return (
-    <>
-      {!hideNavbar && <Navbar />}
-      
-      <main>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+    return (
+        <>
+            {!hideNavbar && <Navbar />}
 
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/history" element={<History />} />
+            <main>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/logout" element={<Logout />} />
 
-          <Route path="/submitReceipt" element={<SubmitReceipt />} />
-          <Route path="/review" element={<Review />} />
+                    <Route index element={<Dashboard />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/history" element={<History />} />
 
-          <Route path="/receiptInformation" element={<ReceiptInformation />} />
-        </Routes>
-      </main>
-    </>
-  );
+                    <Route path="/submitReceipt" element={<SubmitReceipt />} />
+                    <Route path="/review" element={<Review />} />
+
+                    <Route
+                        path="/receipt/:receiptId"
+                        element={<ReceiptInformation />}
+                    />
+                </Routes>
+            </main>
+        </>
+    );
 }
 
 export default function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
+    return (
+        <Router>
+            <AuthProvider>
+                <AppContent />
+            </AuthProvider>
+        </Router>
+    );
 }

@@ -3,28 +3,26 @@ import "./Dashboard.css";
 import SalesDashboard from "./SalespersonDashboard";
 import AccountantDashboard from "./AccountantDashboard";
 import ManagerDashboard from "./ManagerDashboard";
+import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
 
 export default function Dashboard() {
-  
-  /*
-     0 = Salesperson
-     1 = Accountant
-     2 = Manager
-  */
-  let user = 2;
+    useUserOnlyPage();
 
-  const renderScreen = () => {
-    switch (user) {
-      case 0:
-        return <SalesDashboard />;
-      case 1:
-        return <AccountantDashboard />;
-      case 2:
-        return <ManagerDashboard />;
-      default:
-        return <h2>Unknown role</h2>;
-    }
-  };
+    const { user } = useAuth();
 
-  return <div className="dashboard">{renderScreen()}</div>;
+    const renderScreen = () => {
+        switch (user?.type) {
+            case "salesperson":
+                return <SalesDashboard />;
+            case "accountant":
+                return <AccountantDashboard />;
+            case "manager":
+                return <ManagerDashboard />;
+            default:
+                return <h2>Unknown role</h2>;
+        }
+    };
+
+    return <div className="dashboard">{renderScreen()}</div>;
 }
+
