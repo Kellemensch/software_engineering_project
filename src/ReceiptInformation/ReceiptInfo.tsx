@@ -8,8 +8,9 @@ import {
 } from "../model/receipt";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
+import { formatDate } from "../utils";
 
-export default function SalespersonReceiptInfo() {
+export default function ReceiptInfo() {
     useUserOnlyPage();
 
     const [receipt, setReceipt] = useState<Receipt>();
@@ -96,6 +97,9 @@ export default function SalespersonReceiptInfo() {
                                     </button>
                                 </>
                             )}
+                            {user!.type === "manager" && (
+                                <p>no buttons yet for the manager view</p>
+                            )}
                         </div>
                     </>
                 ) : (
@@ -104,8 +108,4 @@ export default function SalespersonReceiptInfo() {
             </div>
         </div>
     );
-}
-
-function formatDate(date: Date) {
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 }

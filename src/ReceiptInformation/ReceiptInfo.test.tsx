@@ -1,11 +1,10 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import SalespersonReceiptInfo from "./SalespersonReceiptInfo";
+import ReceiptInfo from "./ReceiptInfo";
 
 describe("Receipt information Salesperson", () => {
-    render(<SalespersonReceiptInfo />);
+    render(<ReceiptInfo />);
 
     it("Render Salesperson receipt information", () => {
         expect(screen.getByText("Receipt Information")).toBeInTheDocument();

@@ -8,7 +8,7 @@ import Navbar from "./NavigationBar/Navbar";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile";
 import SubmitReceipt from "./SubmitReceipt";
-import ReceiptInformation from "./ReceiptInformation/ReceiptInformation";
+import ReceiptInfo from "./ReceiptInformation/ReceiptInfo";
 import Review from "./Review";
 import History from "./History/History";
 import Login from "./Authentication/Login";
@@ -42,7 +42,7 @@ function AppContent() {
 
                     <Route
                         path="/receipt/:receiptId"
-                        element={<ReceiptInformation />}
+                        element={<ReceiptInfo />}
                     />
                 </Routes>
             </main>
