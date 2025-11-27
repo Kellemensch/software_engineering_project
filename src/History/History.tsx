@@ -1,16 +1,18 @@
 import SalespersonHistory from "./SalespersonHistory";
 import AccountantHistory from "./AccountantHistory";
 import ManagerHistory from "./ManagerHistory";
+import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
 
-export default function History({ user = 0 }) {
-    /* 0=sales, 1=accountant, 2=manager*/
+export default function History() {
+    useUserOnlyPage();
+    const { user } = useAuth();
 
-    switch (user) {
-        case 0:
+    switch (user!.type) {
+        case "salesperson":
             return <SalespersonHistory />;
-        case 1:
+        case "accountant":
             return <AccountantHistory />;
-        case 2:
+        case "manager":
             return <ManagerHistory />;
         default:
             return null;

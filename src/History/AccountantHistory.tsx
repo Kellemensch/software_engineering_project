@@ -1,67 +1,34 @@
 import { CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../Authentication/AuthContext";
+import { type Receipt, getReceiptsForGroup } from "../model/receipt";
+import { formatDate } from "../utils";
 export default function AccountantHistory() {
-    const notifications = [
-        {
-            account: "Katy Perry",
-            date: "12.11.2024",
-            store: "Lidl",
-            status: "rejected",
-        },
-        {
-            account: "Dwayne Johnson",
-            date: "1.1.2024",
-            store: "Lidl",
-            status: "accepted",
-        },
-        {
-            account: "Dwayne Johnson",
-            date: "1.1.2025",
-            store: "Lidl",
-            status: "accepted",
-        },
-        {
-            account: "Liam Neeson",
-            date: "31.12.2024",
-            store: "Lidl",
-            status: "accepted",
-        },
-        {
-            account: "Dwayne Johnson",
-            date: "12.11.2024",
-            store: "Lidl",
-            status: "accepted",
-        },
-        {
-            account: "Katy Perry",
-            date: "1.1.2024",
-            store: "Lidl",
-            status: "accepted",
-        },
-        {
-            account: "Katy Perry",
-            date: "1.1.2024",
-            store: "Lidl",
-            status: "new",
-        },
-    ];
+    const [receipts, setReceipts] = useState<Receipt[]>([]);
+    const { user } = useAuth();
+
+    useEffect(() => {
+        setReceipts(getReceiptsForGroup(user!.groupId));
+    }, [user]);
 
     return (
         <div className="dashboard-container">
             <div className="notifications-card">
                 <h2>Review History</h2>
                 <div className="notifications-list">
-                    {notifications.map((n, i) => (
+                    {receipts.map((r) => (
                         <div
-                            key={i}
+                            key={r.id}
                             className={`notification-item ${
-                                n.status === "new" ? "new" : ""
-                            } ${n.status === "rejected" ? "rejected" : ""}`}
+                                r.status === "new" ? "new" : ""
+                            } ${r.status === "rejected" ? "rejected" : ""}`}
                             data-testid="notification-div"
                         >
                             <span>
-                                {n.account}
+                                {r.salesperson.firstname}{" "}
+                                {r.salesperson.lastname}
                                 <br />
-                                {n.date} – {n.store}{" "}
+                                {formatDate(r.date)} {r.title}{" "}
                             </span>
                             <CheckCircle
                                 size={24}
