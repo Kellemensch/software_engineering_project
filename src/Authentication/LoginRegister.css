@@ -6,50 +6,50 @@ h1 {
 }
 
 .login-background {
-  height: 100vh;
-  width: 100vw;
-  background-color: #42efc4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-color: #42efc4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .login-card {
-  background-color: white;
-  border-radius: 20px;
-  width: 85vw;
-  max-width: 400px;
-  height: 75vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 20px;
+    width: 85vw;
+    max-width: 400px;
+    height: 75vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .register-card {
-  background-color: white;
-  border-radius: 20px;
-  width: 85vw;
-  max-width: 400px;
-  height: 75vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 20px;
+    width: 85vw;
+    max-width: 400px;
+    height: 75vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .login-form {
     color: black;
-    margin-top: 20vh;   
+    margin-top: 20vh;
     width: 100%;
 }
 
 .register-form {
     color: black;
-    margin-top: 10vh;   
+    margin-top: 10vh;
     width: 100%;
 }
 
@@ -65,8 +65,8 @@ h1 {
     outline: none;
 }
 
-.login-card button,
-.register-card button {
+.login-card form button,
+.register-card form button {
     display: block;
     background-color: #42efc4;
     border: 2px solid white;
@@ -81,9 +81,17 @@ h1 {
     margin-right: auto;
 }
 
-.login-card button:hover,
-.register-card button:hover {
+.login-card form button:hover,
+.register-card form button:hover {
     color: #42efc4;
     background-color: white;
     border: 2px solid #42efc4;
+}
+
+.autologin-list {
+    margin-top: 2em;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

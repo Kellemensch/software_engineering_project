@@ -20,6 +20,17 @@ export default function Login() {
         if (result) navigate("/dashboard");
     }
 
+    function autoLogin(id: number) {
+        const logins = [
+            ["salesperson@example.com", "changeme"],
+            ["accountant@example.com", "password"],
+            ["manager@example.com", "DonkeyKong"],
+        ];
+
+        login(logins[id][0], logins[id][1]);
+        navigate("/dashboard");
+    }
+
     return (
         <div className="login-background">
             <div className="login-card">
@@ -41,6 +52,25 @@ export default function Login() {
                     <button type="submit">Submit</button>
                 </form>
                 <Link to="/register">Switch to Signup</Link>
+
+                <hr />
+                <ul className="autologin-list">
+                    <li>
+                        <button onClick={() => autoLogin(0)}>
+                            Login as default Salesperson
+                        </button>
+                    </li>
+                    <li>
+                        <button onClick={() => autoLogin(1)}>
+                            Login as default Accountant
+                        </button>
+                    </li>
+                    <li>
+                        <button onClick={() => autoLogin(2)}>
+                            Login as default Manager
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
     );
