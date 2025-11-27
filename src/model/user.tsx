@@ -78,3 +78,13 @@ export function getAllUsers() {
         };
     });
 }
+
+export function getAccountant(salesperson: User) {
+    if (salesperson.type !== "salesperson") return null;
+
+    return (
+        users.find(
+            (u) => u.type === "accountant" && u.groupId === salesperson.groupId,
+        ) ?? null
+    );
+}

@@ -1,4 +1,3 @@
-import { Info, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../Authentication/AuthContext";
@@ -17,35 +16,26 @@ export default function AccountantDashboard() {
             <div className="notifications-card">
                 <h2>Receipts</h2>
                 <div className="notifications-list">
-                    {receipts.map((r) => (
-                        <Link
-                            key={r.id}
-                            to={`/receipt/${r.id}`}
-                            className="notification-link"
-                        >
-                            <div
-                                className={`notification-item ${r.status === "new" ? "new" : ""} ${r.status === "rejected" ? "rejected" : ""}`}
+                    {receipts
+                        .filter((r) => r.status === "new")
+                        .map((r) => (
+                            <Link
+                                key={r.id}
+                                to={`/receipt/${r.id}`}
+                                className="notification-link"
                             >
-                                <span>
-                                    {r.salesperson.firstname}{" "}
-                                    {r.salesperson.lastname}
-                                    <br />
-                                    {r.date.toDateString()} – {r.subject}
-                                </span>
-                                {r.status === "new" ? (
-                                    <Info
-                                        size={24}
-                                        className="icon info-icon"
-                                    />
-                                ) : (
-                                    <CheckCircle
-                                        size={24}
-                                        className="icon accepted-icon"
-                                    />
-                                )}
-                            </div>
-                        </Link>
-                    ))}
+                                <div
+                                    className={`notification-item ${r.status === "new" ? "new" : ""} ${r.status === "rejected" ? "rejected" : ""}`}
+                                >
+                                    <span>
+                                        {r.salesperson.firstname}{" "}
+                                        {r.salesperson.lastname}
+                                        <br />
+                                        {r.date.toDateString()} – {r.subject}
+                                    </span>
+                                </div>
+                            </Link>
+                        ))}
                 </div>
             </div>
         </div>

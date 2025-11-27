@@ -1,53 +1,84 @@
-export default function ManagerDashboard() {
-    const stats = {
-        new: 2,
-        submitted: 108,
-        accepted: 106,
-        rejected: 2,
-    };
+import { useEffect, useMemo, useState } from "react";
+import { getReceipts, type Receipt } from "../model/receipt";
+import type { Group } from "../model/group";
+import { getAccountant } from "../model/user";
 
-    const groups = [
-        { title: "Group 1", accountant: "John Doe", spending: "€500" },
-        { title: "Group 2", accountant: "Lisa Ray", spending: "€800" },
-        { title: "Group 3", accountant: "Mark Lee", spending: "€230" },
-        { title: "Group 4", accountant: "Sara Kim", spending: "€1020" },
-    ];
+export default function ManagerDashboard() {
+    const [receipts, setReceipts] = useState<Receipt[]>([]);
+
+    useEffect(() => {
+        setReceipts(getReceipts());
+    }, []);
+
+    const groups = useMemo(() => {
+        const groups: { [id: number]: Group } = {};
+
+        receipts.forEach((r) => {
+            groups[r.salesperson.groupId] ||= {
+                title: `Group ${r.salesperson.groupId}`,
+                accountant: getAccountant(r.salesperson)!,
+                spending: 0,
+            };
+
+            groups[r.salesperson.groupId].spending += r.amount;
+        });
+
+        return groups;
+    }, [receipts]);
 
     return (
         <div className="manager-dashboard-container">
-
             <div className="manager-dashboard-card">
                 <h2>Dashboard</h2>
                 <div className="dashboard-stats">
                     <div className="stat-row-new">
                         <span>New Receipts:</span>
-                        <span className="stat-value-new">{stats.new}</span>
+                        <span className="stat-value-new">
+                            {receipts.filter((r) => r.status === "new").length}
+                        </span>
                     </div>
                     <div className="stat-row">
                         <span>Submitted Receipts:</span>
-                        <span>{stats.submitted}</span>
+                        <span>{receipts.length}</span>
                     </div>
                     <div className="stat-row">
                         <span>Accepted Receipts:</span>
-                        <span>{stats.accepted}</span>
+                        <span>
+                            {
+                                receipts.filter((r) => r.status === "approved")
+                                    .length
+                            }
+                        </span>
                     </div>
                     <div className="stat-row">
                         <span>Rejected Receipts:</span>
-                        <span>{stats.rejected}</span>
+                        <span>
+                            {
+                                receipts.filter((r) => r.status === "rejected")
+                                    .length
+                            }
+                        </span>
                     </div>
                 </div>
             </div>
 
             <div className="manager-statistics-card">
-                {groups.map((g, i) => (
-                    <div className="manager-statistic-item" key={i}>
+                {Object.entries(groups).map(([_, g]) => (
+                    <div
+                        className="manager-statistic-item"
+                        key={g.accountant.groupId}
+                    >
                         <h3>{g.title}</h3>
-                        <p><strong>Responsible:</strong> {g.accountant}</p>
-                        <p><strong>Spending this month:</strong> {g.spending}</p>
+                        <p>
+                            <strong>Responsible:</strong>{" "}
+                            {g.accountant.firstname} {g.accountant.lastname}
+                        </p>
+                        <p>
+                            <strong>Spending this month:</strong> {g.spending}
+                        </p>
                     </div>
                 ))}
             </div>
-
         </div>
     );
 }
