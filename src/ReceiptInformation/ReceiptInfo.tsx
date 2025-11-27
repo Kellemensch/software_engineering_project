@@ -10,6 +10,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
 import { formatDate } from "../utils";
 
+import "./ReceiptInfo.css";
+
 export default function ReceiptInfo() {
     useUserOnlyPage();
 
