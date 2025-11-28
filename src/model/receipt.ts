@@ -1,3 +1,4 @@
+import { log } from "./logs";
 import { getUserData, type User } from "./user";
 import { v4 as uuidv4 } from "uuid";
 
@@ -64,6 +65,8 @@ export function createReceipt(data: {
         id,
     };
 
+    log(`Receipt created by ${data.email} : ${JSON.stringify(receipt)}`);
+
     setReceipts([...receipts, receipt]);
     return id;
 }
@@ -72,6 +75,8 @@ export function approveReceipt(id: string, accountantEmail: string) {
     // check the approver is an accountant
     const approver = getUserData(accountantEmail);
     if (approver?.type !== "accountant") return false;
+
+    log(`Receipt ${id} approved by ${accountantEmail}`);
 
     setReceipts(
         receipts.map((r) => {
@@ -87,6 +92,8 @@ export function rejectReceipt(id: string, accountantEmail: string) {
     const approver = getUserData(accountantEmail);
     if (approver?.type !== "accountant") return false;
 
+    log(`Receipt ${id} rejected by ${accountantEmail}`);
+
     setReceipts(
         receipts.map((r) => {
             if (r.id === id) r.status = "rejected";
@@ -101,5 +108,6 @@ export function getReceipt(id: string) {
 }
 
 export function deleteReceipt(id: string) {
+    log(`Receipt ${id} deleted.`);
     setReceipts(receipts.filter((r) => r.id !== id));
 }

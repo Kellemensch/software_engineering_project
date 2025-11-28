@@ -1,5 +1,7 @@
 // THIS INTERFACE IS NOT SECURE AT ALL!! and is used more mocking purposes than anything else
 
+import { log } from "./logs";
+
 export interface User {
     firstname: string;
     lastname: string;
@@ -43,9 +45,14 @@ let users: User[] = [
 
 /// Returns true if the given email and password match in the database
 export function login(email: string, password: string) {
-    return users.some(
+    const res = users.some(
         (user) => user.email === email && user.password === password,
     );
+
+    if (res) log(`Successful login attempt for ${email}`);
+    else log(`Failed login attempt for ${email}`);
+
+    return res;
 }
 
 export function signup(userInfo: {
@@ -56,6 +63,7 @@ export function signup(userInfo: {
     password: string;
     type: UserType;
 }) {
+    log(`User ${userInfo.email} successfully signed up.`);
     users.push({ ...userInfo, groupId: 0 });
 }
 
@@ -66,6 +74,8 @@ export function getUserData(email: string) {
 export function deleteUser(email: string, password: string) {
     const user = users.find((u) => u.email == email && u.password == password);
     if (!user) return false;
+
+    log(`User ${user.email} has been deleted.`);
 
     users = users.filter((u) => u != user);
 }
