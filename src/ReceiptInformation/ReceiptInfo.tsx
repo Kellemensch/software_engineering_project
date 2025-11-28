@@ -9,13 +9,16 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
 import { formatDate } from "../utils";
+// @ts-ignore
+import * as api from "../api/bankApi";
+import { type BankPayment } from "../model/bankPayment";
 
 import "./ReceiptInfo.css";
 
 export default function ReceiptInfo() {
     useUserOnlyPage();
-
     const [receipt, setReceipt] = useState<Receipt>();
+    const [payments, setPayments] = useState<BankPayment[]>([]);
 
     const { user } = useAuth();
 
@@ -47,6 +50,13 @@ export default function ReceiptInfo() {
         if (receipt) rejectReceipt(receipt.id, user!.email);
         alert("Rejected! Redirecting to dashboard");
         navigate("/dashboard");
+    }
+    async function handleFetch() {
+        if (!receipt) return;
+        const payments = await api.fetchPaymentsForName(
+            `${receipt.salesperson.firstname} ${receipt.salesperson.lastname}`
+        );
+        setPayments(payments);
     }
 
     return (
@@ -97,10 +107,58 @@ export default function ReceiptInfo() {
                                     >
                                         Not Valid
                                     </button>
+                                    <button type="submit" onClick={handleFetch}>
+                                        Verify payments
+                                    </button>
                                 </>
                             )}
                             {user!.type === "manager" && (
                                 <p>no buttons yet for the manager view</p>
+                            )}
+
+                            {user!.type === "accountant" && payments && (
+                                <div className="payments-sidebar">
+                                    <div className="information-card">
+                                        <ul>
+                                            {payments.map((p: BankPayment) => (
+                                                <li key={p.id}>
+                                                    <p>Id: {p.id}</p>
+                                                    <p>
+                                                        Amount:{" "}
+                                                        {p.attributes.amount}
+                                                    </p>
+                                                    <p>
+                                                        Status:{" "}
+                                                        {p.attributes.status}
+                                                    </p>
+
+                                                    <button
+                                                        onClick={() => {
+                                                            api.markPayment(
+                                                                p.id,
+                                                                "approved"
+                                                            );
+                                                            handleFetch();
+                                                        }}
+                                                    >
+                                                        Approve
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            api.markPayment(
+                                                                p.id,
+                                                                "fraud"
+                                                            );
+                                                            handleFetch();
+                                                        }}
+                                                    >
+                                                        Fraud
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </>

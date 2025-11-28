@@ -77,3 +77,18 @@
     padding-top: 120px;
   }
 }
+
+.payments-sidebar {
+    position: fixed;
+    right: 20px;
+    top: 120px;
+    width: 350px;
+}
+
+@media (max-width: 768px) {
+    .payments-sidebar {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+    }
+}
