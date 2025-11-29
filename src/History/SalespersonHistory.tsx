@@ -11,7 +11,7 @@ export default function SalespersonHistory() {
 
     useEffect(() => {
         setReceipts(getReceiptsForUser(user!.email));
-    }, [user]);
+    }, []);
 
     return (
         <div className="dashboard-container">

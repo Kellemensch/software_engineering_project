@@ -13,7 +13,7 @@ export default function ManagerHistory() {
     return (
         <div className="dashboard-container">
             <div className="notifications-card">
-                <h2>Review History</h2>
+                <h2>Manager History</h2>
                 <div className="notifications-list">
                     {receipts.map((r) => (
                         <div

@@ -1,48 +1,124 @@
-import React from "react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { describe, it, expect, afterEach } from "vitest";
+import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
-import { MemoryRouter } from "react-router-dom";
 import History from "./History";
+import * as AuthContext from "../Authentication/AuthContext";
+import type { User } from "../model/user";
 
-afterEach(() => {
+// Composents mocks
+vi.mock("./SalespersonHistory", () => ({
+    default: () => (
+        <div data-testid="salesperson-history">Salesperson History</div>
+    ),
+}));
+
+vi.mock("./AccountantHistory", () => ({
+    default: () => (
+        <div data-testid="accountant-history">Accountant History</div>
+    ),
+}));
+
+vi.mock("./ManagerHistory", () => ({
+    default: () => <div data-testid="manager-history">Manager History</div>,
+}));
+
+vi.mock("../Authentication/AuthContext", async () => {
+    const actual = await vi.importActual("../Authentication/AuthContext");
+    return {
+        ...actual,
+        useUserOnlyPage: vi.fn(),
+    };
+});
+
+const mockSaleman: User = {
+    email: "salesperson@test.com",
+    type: "salesperson",
+    firstname: "John",
+    lastname: "Doe",
+    groupId: 1,
+};
+const mockAccountant: User = {
+    email: "accountant@test.com",
+    type: "accountant",
+    firstname: "John",
+    lastname: "Doe",
+    groupId: 1,
+};
+const mockManager: User = {
+    email: "manager@test.com",
+    type: "manager",
+    firstname: "John",
+    lastname: "Doe",
+    groupId: 1,
+};
+const mockInvalid: User = {
+    email: "invalid@test.com",
+    type: "invalid" as any,
+    firstname: "John",
+    lastname: "Doe",
+    groupId: 1,
+};
+
+beforeEach(() => {
+    vi.clearAllMocks();
     cleanup();
 });
 
-describe("List receipts", () => {
-    it("List Salesperson receipts", () => {
-        render(
-            <MemoryRouter>
-                <History user={0} />
-            </MemoryRouter>
-        );
-        expect(screen.getByText("Submit History")).toBeInTheDocument();
+const renderWithRouter = (component: React.ReactElement, user: User) => {
+    vi.spyOn(AuthContext, "useAuth").mockReturnValue({
+        user,
+        login: vi.fn(),
+        register: vi.fn(),
+        logout: vi.fn(),
+    });
+    return render(<BrowserRouter>{component}</BrowserRouter>);
+};
+
+describe("History Component", () => {
+    it("render salesperson view", () => {
+        renderWithRouter(<History />, mockSaleman);
+
+        expect(screen.getByTestId("salesperson-history")).toBeInTheDocument();
+        expect(
+            screen.queryByTestId("accountant-history")
+        ).not.toBeInTheDocument();
+        expect(screen.queryByTestId("manager-history")).not.toBeInTheDocument();
     });
 
-    it("List Accountant receipts", () => {
-        render(
-            <MemoryRouter>
-                <History user={1} />
-            </MemoryRouter>
-        );
-        expect(screen.getByText("Review History")).toBeInTheDocument();
+    it("render accountant view", () => {
+        renderWithRouter(<History />, mockAccountant);
+
+        expect(screen.getByTestId("accountant-history")).toBeInTheDocument();
+        expect(
+            screen.queryByTestId("salesperson-history")
+        ).not.toBeInTheDocument();
+        expect(screen.queryByTestId("manager-history")).not.toBeInTheDocument();
     });
 
-    it("List Manager receipts", () => {
-        render(
-            <MemoryRouter>
-                <History user={2} />
-            </MemoryRouter>
-        );
-        expect(screen.getByText("Manager History")).toBeInTheDocument();
+    it("render manager view", () => {
+        renderWithRouter(<History />, mockManager);
+
+        expect(screen.getByTestId("manager-history")).toBeInTheDocument();
+        expect(
+            screen.queryByTestId("salesperson-history")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByTestId("accountant-history")
+        ).not.toBeInTheDocument();
     });
 
-    it("Return null if unknown user", () => {
-        const { container } = render(
-            <MemoryRouter>
-                <History user={-1} />
-            </MemoryRouter>
-        );
+    it("render null for invalid user", () => {
+        const { container } = renderWithRouter(<History />, mockInvalid);
+
         expect(container.firstChild).toBeNull();
+    });
+
+    it("call useUserOnlyPage", () => {
+        const useUserOnlyPageSpy = vi.spyOn(AuthContext, "useUserOnlyPage");
+
+        renderWithRouter(<History />, mockSaleman);
+
+        expect(useUserOnlyPageSpy).toHaveBeenCalledOnce();
     });
 });

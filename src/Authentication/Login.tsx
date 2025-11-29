@@ -16,7 +16,7 @@ export default function Login() {
         e.preventDefault();
 
         const result = login(email, password);
-        setError(result);
+        setError(!result);
         if (result) navigate("/dashboard");
     }
 

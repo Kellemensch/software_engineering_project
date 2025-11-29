@@ -23,17 +23,19 @@ export default function ReceiptInfo() {
     const { user } = useAuth();
 
     const { receiptId } = useParams();
+    // console.log("[DEBUG] ReceiptInfo useParams:", receiptId);
     const navigate = useNavigate();
 
     useEffect(() => {
         const receipt = getReceipt(receiptId!);
+        // console.log("[DEBUG] ReceiptInfo getReceipt:", receipt);
         if (!receipt) {
             alert("Receipt not found. Redirecting to dashboard...");
             navigate("/dashboard");
             return;
         }
         setReceipt(getReceipt(receiptId!));
-    }, []);
+    }, [receiptId]);
 
     function handleDelete() {
         if (receipt) deleteReceipt(receipt.id);
