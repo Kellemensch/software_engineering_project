@@ -4,6 +4,8 @@ import {
     deleteReceipt,
     getReceipt,
     rejectReceipt,
+    verifyReceipt,
+    invalidateReceipt,
     type Receipt,
 } from "../model/receipt";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,18 +25,16 @@ export default function ReceiptInfo() {
     const { user } = useAuth();
 
     const { receiptId } = useParams();
-    // console.log("[DEBUG] ReceiptInfo useParams:", receiptId);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const receipt = getReceipt(receiptId!);
-        // console.log("[DEBUG] ReceiptInfo getReceipt:", receipt);
-        if (!receipt) {
+        const currentReceipt = getReceipt(receiptId!);
+        if (!currentReceipt) {
             alert("Receipt not found. Redirecting to dashboard...");
             navigate("/dashboard");
             return;
         }
-        setReceipt(getReceipt(receiptId!));
+        setReceipt(currentReceipt);
     }, [receiptId]);
 
     function handleDelete() {
@@ -44,15 +44,19 @@ export default function ReceiptInfo() {
     }
 
     function handleValidate() {
-        if (receipt) approveReceipt(receipt.id, user!.email);
-        alert("Successfully Validated!");
+        if (receipt) verifyReceipt(receipt.id, user!.email);
+        alert("Successfully Validated! Sending to Manager for approval.");
+        setReceipt(getReceipt(receiptId!));
         navigate("/dashboard");
     }
+
     function handleReject() {
-        if (receipt) rejectReceipt(receipt.id, user!.email);
+        if (receipt) invalidateReceipt(receipt.id, user!.email);
         alert("Successfully Rejected!");
+        setReceipt(getReceipt(receiptId!));
         navigate("/dashboard");
     }
+
     async function handleFetch() {
         if (!receipt) return;
         const payments = await api.fetchPaymentsForName(
@@ -87,7 +91,7 @@ export default function ReceiptInfo() {
                         <b>Status: </b><span className="status">{receipt.status}</span>
 
                         <div className="button-container">
-                            {user!.type == "salesperson" && (
+                            {user!.type == "salesperson" && (receipt.status === "new" || receipt.status === "verified") && (
                                 <button
                                     className="delete-button"
                                     onClick={handleDelete}
@@ -95,7 +99,8 @@ export default function ReceiptInfo() {
                                     Delete
                                 </button>
                             )}
-                            {user!.type === "accountant" && (
+                            
+                            {user!.type === "accountant" && receipt.status === "new" && (
                                 <>
                                 <div className="button-row">
                                     <button
@@ -120,13 +125,37 @@ export default function ReceiptInfo() {
                                 </div>
                                 </>
                             )}
-                            {user!.type === "manager" && (
-                                <p>no buttons yet for the manager view</p>
+                            
+                            {user!.type === "manager" && receipt.status === "verified" && (
+                                <div className="button-row">
+                                    <button
+                                        className="valid-button"
+                                        onClick={() => {
+                                            if (receipt) approveReceipt(receipt.id, user!.email);
+                                            alert("Receipt Approved!");
+                                            navigate("/dashboard");
+                                        }}
+                                    >
+                                        Approve
+                                    </button>
+
+                                    <button
+                                        className="not-valid-button"
+                                        onClick={() => {
+                                            if (receipt) rejectReceipt(receipt.id, user!.email);
+                                            alert("Manager rejected the receipt!");
+                                            navigate("/dashboard");
+                                        }}
+                                    >
+                                        Don't Approve
+                                    </button>
+                                </div>
                             )}
 
-                            {user!.type === "accountant" && payments && (
+                            {user!.type === "accountant" && payments && payments.length > 0 && (
                                 <div className="payments-sidebar">
                                     <div className="information-card">
+                                        <h4>Payments for {receipt.salesperson.firstname}</h4>
                                         <ul>
                                             {payments.map((p: BankPayment) => (
                                                 <li key={p.id}>

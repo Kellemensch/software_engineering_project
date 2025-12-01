@@ -1,3 +1,4 @@
+// receipt.model.ts
 import { log } from "./logs";
 import { getUserData, type User } from "./user";
 import { v4 as uuidv4 } from "uuid";
@@ -71,32 +72,74 @@ export function createReceipt(data: {
     return id;
 }
 
-export function approveReceipt(id: string, accountantEmail: string) {
-    // check the approver is an accountant
-    const approver = getUserData(accountantEmail);
-    if (approver?.type !== "accountant") return false;
 
-    log(`Receipt ${id} approved by ${accountantEmail}`);
+export function verifyReceipt(id: string, accountantEmail: string) {
+    // check the verifier is an accountant
+    const verifier = getUserData(accountantEmail);
+    if (verifier?.type !== "accountant") return false;
+
+    log(`Receipt ${id} verified by ${accountantEmail}`);
 
     setReceipts(
         receipts.map((r) => {
-            if (r.id === id) r.status = "approved";
+            if (r.id === id && r.status === "new") {
+                r.status = "verified";
+            }
             return r;
         }),
     );
     return true;
 }
 
-export function rejectReceipt(id: string, accountantEmail: string) {
-    // check the approver is an accountant
-    const approver = getUserData(accountantEmail);
-    if (approver?.type !== "accountant") return false;
+export function invalidateReceipt(id: string, accountantEmail: string) {
+    // check the verifier is an accountant
+    const verifier = getUserData(accountantEmail);
+    if (verifier?.type !== "accountant") return false;
 
-    log(`Receipt ${id} rejected by ${accountantEmail}`);
+    log(`Receipt ${id} invalidated by ${accountantEmail}`);
 
     setReceipts(
         receipts.map((r) => {
-            if (r.id === id) r.status = "rejected";
+            if (r.id === id && r.status === "new") {
+                r.status = "rejected";
+            }
+            return r;
+        }),
+    );
+    return true;
+}
+
+
+export function approveReceipt(id: string, managerEmail: string) {
+    // check the approver is a manager
+    const approver = getUserData(managerEmail);
+    if (approver?.type !== "manager") return false;
+
+    log(`Receipt ${id} approved by ${managerEmail}`);
+
+    setReceipts(
+        receipts.map((r) => {
+            if (r.id === id && r.status === "verified") {
+                r.status = "approved";
+            }
+            return r;
+        }),
+    );
+    return true;
+}
+
+export function rejectReceipt(id: string, managerEmail: string) {
+    // check the approver is a manager
+    const approver = getUserData(managerEmail);
+    if (approver?.type !== "manager") return false;
+
+    log(`Receipt ${id} rejected by ${managerEmail}`);
+
+    setReceipts(
+        receipts.map((r) => {
+            if (r.id === id && r.status === "verified") {
+                r.status = "rejected";
+            }
             return r;
         }),
     );
