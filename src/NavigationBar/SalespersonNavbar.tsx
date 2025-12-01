@@ -17,7 +17,7 @@ export default function SalespersonNavbar() {
 
                     <li>
                         <Link className="hide" to="/submitReceipt">
-                            Submit a Receipt
+                            Submit
                         </Link>
                     </li>
                     <li>
@@ -74,7 +74,7 @@ export default function SalespersonNavbar() {
                             to="/submitReceipt"
                             onClick={() => setMenuOpen(false)}
                         >
-                            Submit a Receipt
+                            Submit
                         </Link>
                     </li>
                     <li>

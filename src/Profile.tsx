@@ -53,7 +53,7 @@ export default function Profile() {
                         </p>
                     </div>
 
-                    <Link to="/logout">Logout</Link>
+                    <Link className="logout-button" to="/logout">Logout</Link>
                 </article>
             )}
         </div>

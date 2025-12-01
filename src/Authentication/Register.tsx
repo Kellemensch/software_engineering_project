@@ -54,9 +54,9 @@ export default function Register() {
                         placeholder="Password"
                         name="password"
                     />
+                    <Link className="login-register-link" to="/login">Already have an Account?</Link>
                     <button type="submit">Submit</button>
                 </form>
-                <Link to="/login">Switch to login</Link>
             </div>
         </div>
     );

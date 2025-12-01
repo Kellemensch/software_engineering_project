@@ -49,9 +49,9 @@ export default function Login() {
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <Link className="login-register-link" to="/register">Don't have an Account?</Link>
                     <button type="submit">Submit</button>
                 </form>
-                <Link to="/register">Switch to Signup</Link>
 
                 <hr />
                 <ul className="autologin-list">

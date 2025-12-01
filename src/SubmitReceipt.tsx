@@ -44,7 +44,7 @@ export default function SubmitReceipt() {
             image,
             email: user!.email,
         });
-        alert("Receipt submitted! Check console for details.");
+        alert("Receipt submitted! Do not throw away your receipt!!!");
         navigate("/dashboard");
     };
 
@@ -76,6 +76,8 @@ export default function SubmitReceipt() {
                             style={{ display: "none" }}
                         />
                     </div>
+
+                    <h3>Don't throw away your receipt!!!</h3><br />
 
                     <input
                         type="text"

@@ -39,18 +39,18 @@ export default function ReceiptInfo() {
 
     function handleDelete() {
         if (receipt) deleteReceipt(receipt.id);
-        alert("Deleted! Redirecting to dashboard...");
+        alert("Succesfully Deleted!");
         navigate("/dashboard");
     }
 
     function handleValidate() {
         if (receipt) approveReceipt(receipt.id, user!.email);
-        alert("Approved! Redirecting to dashboard");
+        alert("Successfully Validated!");
         navigate("/dashboard");
     }
     function handleReject() {
         if (receipt) rejectReceipt(receipt.id, user!.email);
-        alert("Rejected! Redirecting to dashboard");
+        alert("Successfully Rejected!");
         navigate("/dashboard");
     }
     async function handleFetch() {
@@ -73,16 +73,18 @@ export default function ReceiptInfo() {
                             className="information-image"
                             alt="Receipt"
                         />
+                        <b className="warning">Don't throw away your receipt!!!</b>
                         <br />
-                        <b>{receipt.title}</b>
                         <br />
-                        <b>{receipt.subject}</b>
+                        <b>Title: </b>{receipt.title}
                         <br />
-                        <b>{formatDate(receipt.date)}</b>
+                        <b>Subject: </b>{receipt.subject}
                         <br />
-                        <b>{receipt.amount} €</b>
+                        <b>Date: </b>{formatDate(receipt.date)}
                         <br />
-                        <b>{receipt.status}</b>
+                        <b>Amount: </b>{receipt.amount} €
+                        <br />
+                        <b>Status: </b><span className="status">{receipt.status}</span>
 
                         <div className="button-container">
                             {user!.type == "salesperson" && (
@@ -95,6 +97,7 @@ export default function ReceiptInfo() {
                             )}
                             {user!.type === "accountant" && (
                                 <>
+                                <div className="button-row">
                                     <button
                                         type="submit"
                                         className="valid-button"
@@ -109,9 +112,12 @@ export default function ReceiptInfo() {
                                     >
                                         Not Valid
                                     </button>
-                                    <button type="submit" onClick={handleFetch}>
+                                </div>
+                                <div className="button-row">
+                                    <button className="verify-button" type="submit" onClick={handleFetch}>
                                         Verify payments
                                     </button>
+                                </div>
                                 </>
                             )}
                             {user!.type === "manager" && (
