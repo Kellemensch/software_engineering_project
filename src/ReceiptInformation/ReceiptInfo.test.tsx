@@ -67,9 +67,10 @@ beforeEach(() => {
     cleanup();
 
     vi.mock("react-router-dom", async () => {
-        const actual = await vi.importActual<typeof import("react-router-dom")>(
-            "react-router-dom"
-        );
+        const actual =
+            await vi.importActual<typeof import("react-router-dom")>(
+                "react-router-dom",
+            );
 
         return {
             ...actual,
@@ -116,12 +117,12 @@ describe("ReceiptInfo Component", () => {
     });
 
     it("render alert and navigates to dashboard", async () => {
-        vi.spyOn(receiptModel, "getReceipt").mockReturnValue(null);
+        vi.spyOn(receiptModel, "getReceipt").mockReturnValue(undefined);
         renderWithRouter(<ReceiptInfo />, mockSaleman);
 
         await waitFor(() => {
             expect(mockAlert).toHaveBeenCalledWith(
-                "Receipt not found. Redirecting to dashboard..."
+                "Receipt not found. Redirecting to dashboard...",
             );
             expect(mockNavigate).toHaveBeenCalledWith("/dashboard");
         });
@@ -170,7 +171,7 @@ describe("ReceiptInfo Component", () => {
 
             expect(deleteReceiptSpy).toHaveBeenCalledWith("1");
             expect(mockAlert).toHaveBeenCalledWith(
-                "Deleted! Redirecting to dashboard..."
+                "Deleted! Redirecting to dashboard...",
             );
             expect(mockNavigate).toHaveBeenCalledWith("/dashboard");
         });
@@ -200,10 +201,10 @@ describe("ReceiptInfo Component", () => {
 
             expect(approveReceiptSpy).toHaveBeenCalledWith(
                 "1",
-                "accountant@test.com"
+                "accountant@test.com",
             );
             expect(mockAlert).toHaveBeenCalledWith(
-                "Approved! Redirecting to dashboard"
+                "Approved! Redirecting to dashboard",
             );
             expect(mockNavigate).toHaveBeenCalledWith("/dashboard");
         });
@@ -220,10 +221,10 @@ describe("ReceiptInfo Component", () => {
 
             expect(rejectReceiptSpy).toHaveBeenCalledWith(
                 "1",
-                "accountant@test.com"
+                "accountant@test.com",
             );
             expect(mockAlert).toHaveBeenCalledWith(
-                "Rejected! Redirecting to dashboard"
+                "Rejected! Redirecting to dashboard",
             );
             expect(mockNavigate).toHaveBeenCalledWith("/dashboard");
         });
@@ -236,7 +237,7 @@ describe("ReceiptInfo Component", () => {
             renderWithRouter(<ReceiptInfo />, mockManager);
 
             expect(
-                screen.getByText("no buttons yet for the manager view")
+                screen.getByText("no buttons yet for the manager view"),
             ).toBeInTheDocument();
             expect(screen.queryByText("Delete")).not.toBeInTheDocument();
             expect(screen.queryByText("Valid")).not.toBeInTheDocument();
