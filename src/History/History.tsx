@@ -2,10 +2,13 @@ import SalespersonHistory from "./SalespersonHistory";
 import AccountantHistory from "./AccountantHistory";
 import ManagerHistory from "./ManagerHistory";
 import { useAuth, useUserOnlyPage } from "../Authentication/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function History() {
     useUserOnlyPage();
     const { user } = useAuth();
+
+    const navigate = useNavigate();
 
     switch (user!.type) {
         case "salesperson":
@@ -15,6 +18,6 @@ export default function History() {
         case "manager":
             return <ManagerHistory />;
         default:
-            return null;
+            navigate("/login");
     }
 }
